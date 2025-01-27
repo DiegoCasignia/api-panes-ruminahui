@@ -5,6 +5,16 @@ const PORT = 3000;
 
 app.use(express.json());
 
+app.get('/video_camera', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM video_camera');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Error');
+  }
+});
+
 /////////// TABLE: product ///////////
 
 // get all products
