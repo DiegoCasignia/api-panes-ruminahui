@@ -8,6 +8,7 @@ app.use(express.json());
 app.get('/video_camera', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM video_camera');
+    console.log("video camera")
     res.json(result.rows);
   } catch (err) {
     console.error(err.message);
