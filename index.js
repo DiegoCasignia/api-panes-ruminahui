@@ -71,7 +71,7 @@ app.put('/product/:id', async (req, res) => {
     res.status(500).send('Error');
   }
 });
-app.put('/product/:id', async (req, res) => {
+app.put('/mouse/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const { name, mark, price} = req.body;
