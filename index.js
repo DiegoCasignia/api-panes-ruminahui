@@ -74,10 +74,10 @@ app.put('/product/:id', async (req, res) => {
 app.put('/mouse/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, mark, price} = req.body;
+    const { name, mark, price } = req.body;
     const result = await pool.query(
       'UPDATE product SET name = $2, mark = $3, price = $4 WHERE id_product = $1 RETURNING *',
-      [ id, name, description, price, id_category]
+      [ id, name, mark, price ]  // Eliminé 'description' e 'id_category' porque no existen en este contexto
     );
     res.json(result.rows[0]);
   } catch (err) {
@@ -85,6 +85,7 @@ app.put('/mouse/:id', async (req, res) => {
     res.status(500).send('Error');
   }
 });
+
 
 // delete product
 app.delete('/product/:id', async (req, res) => {
