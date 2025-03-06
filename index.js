@@ -440,6 +440,32 @@ app.delete('/rol/:id', async (req, res) => {
 
 //users
 
+//Buscar por usuario y contraseña 
+app.get('/users', async (req, res) => {
+  const { username, password } = req.query; // Asumiendo que los datos vienen como parámetros en la URL
+  try {
+    const result = await pool.query(
+      `SELECT 
+          CASE 
+              WHEN COUNT(*) > 0 THEN 'Usuario encontrado'
+              ELSE 'Usuario no encontrado'
+          END AS mensaje
+       FROM users
+       WHERE username = $1 AND password = $2;`,
+      [username, password]
+    );
+
+    res.json({ message: result.rows[0].mensaje });
+  } catch (error) {
+    console.error('Error en la consulta', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+app.listen(3000, () => {
+  console.log('Servidor corriendo en el puerto 3000');
+});
+
 // Obtener todos los usuarios
 app.get('/users', async (req, res) => {
   try {
