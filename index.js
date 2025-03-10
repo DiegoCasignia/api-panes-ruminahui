@@ -7,6 +7,17 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 
+// get all products
+app.get('/toy', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM toy');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Error');
+  }
+});
+
 app.get('/video_camera', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM video_camera');
